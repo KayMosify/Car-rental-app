@@ -1,13 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import { toast } from "react-hot-toast";
 import { FaCar } from "react-icons/fa6";
 import { BiSolidCategoryAlt } from "react-icons/bi";
+import {
+  getCountries,
+  getRegionsByCountry,
+} from "../../../utils/supabase"; // Update with the correct path to your supabase.js file
 
 const ProfilePage = () => {
   const { user, updateUserProfile } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [imageLoading, setImageLoading] = useState(false);
+  const fileInputRef = useRef(null);
+  const [countries, setCountries] = useState([]);
+  const [regions, setRegions] = useState([]);
   const [profileData, setProfileData] = useState({
     email: "",
     firstName: "",
@@ -15,12 +23,53 @@ const ProfilePage = () => {
     dateOfBirth: "",
     phoneNumber: "",
     gender: "Male",
-    country: "Ghana",
+    country: "",
     region: "",
     city: "",
     streetAddress: "",
     photoURL: "",
   });
+
+  // Fetch countries when component mounts
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const countriesData = await getCountries();
+        setCountries(countriesData);
+
+        // Set default country if user doesn't have one and countries are loaded
+        if (
+          countriesData.length > 0 &&
+          (!profileData.country || profileData.country === "")
+        ) {
+          setProfileData((prev) => ({
+            ...prev,
+            country: countriesData[0].id.toString(), // Assuming id is numeric, convert to string for form value
+          }));
+
+          // Fetch regions for default country
+          fetchRegionsForCountry(countriesData[0].id);
+        }
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+        toast.error("Failed to load countries");
+      }
+    };
+
+    fetchCountries();
+  }, []);
+
+  // Fetch regions when country changes
+  const fetchRegionsForCountry = async (countryId) => {
+    try {
+      const regionsData = await getRegionsByCountry(countryId);
+      setRegions(regionsData);
+    } catch (error) {
+      console.error("Error fetching regions:", error);
+      toast.error("Failed to load regions");
+      setRegions([]);
+    }
+  };
 
   useEffect(() => {
     if (user) {
@@ -32,12 +81,17 @@ const ProfilePage = () => {
         dateOfBirth: user.dateOfBirth || "",
         phoneNumber: user.phoneNumber || "",
         gender: user.gender || "Male",
-        country: user.country || "Ghana",
+        country: user.country || "",
         region: user.region || "",
         city: user.city || "",
         streetAddress: user.streetAddress || "",
         photoURL: user.photoURL || "",
       });
+
+      // If user has a country selected, fetch regions for that country
+      if (user.country) {
+        fetchRegionsForCountry(user.country);
+      }
     }
   }, [user]);
 
@@ -47,6 +101,17 @@ const ProfilePage = () => {
       ...prev,
       [name]: value,
     }));
+
+    // If country changed, fetch regions for the new country
+    if (name === "country" && value) {
+      fetchRegionsForCountry(value);
+
+      // Reset region when country changes
+      setProfileData((prev) => ({
+        ...prev,
+        region: "",
+      }));
+    }
   };
 
   const handleGenderChange = (gender) => {
@@ -71,6 +136,69 @@ const ProfilePage = () => {
     }
   };
 
+  const triggerFileInput = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Check if file is an image
+    if (!file.type.match("image.*")) {
+      toast.error("Please select an image file");
+      return;
+    }
+
+    // Check file size (limit to 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("Image size should be less than 5MB");
+      return;
+    }
+
+    setImageLoading(true);
+
+    try {
+      // Convert the file to base64 string or upload to storage service
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = async () => {
+        // In a real app, you would upload this to your storage service
+        // For now, we'll just use the base64 string
+        const photoURL = reader.result;
+
+        setProfileData((prev) => ({
+          ...prev,
+          photoURL,
+        }));
+
+        // Update in the backend
+        await updateUserProfile({ ...profileData, photoURL });
+        toast.success("Profile picture updated successfully");
+        setImageLoading(false);
+      };
+      reader.onerror = () => {
+        toast.error("Error reading file");
+        setImageLoading(false);
+      };
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      toast.error("Failed to upload image");
+      setImageLoading(false);
+    }
+  };
+
+  // Generate initials from user's name
+  const getInitials = () => {
+    if (profileData.firstName) {
+      return profileData.firstName.charAt(0).toUpperCase();
+    }
+    if (profileData.email) {
+      return profileData.email.charAt(0).toUpperCase();
+    }
+    return "U"; // Default if no name or email
+  };
+
   if (!user) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -85,30 +213,30 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
-      <div className="w-64 bg-white shadow-md">
+    <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
+      {/* Sidebar - hidden on mobile, shown on md and up */}
+      <div className="hidden md:block w-64 bg-white shadow-md">
         <div className="p-6 bg-blue-400 text-white font-bold text-lg">
           My Account
         </div>
         <nav className="p-4">
           <Link
             to="/cars"
-            className="flex items-center p-3 mb-2 gap-2 bg-gray-100 text-gray-700 rounded"
+            className="flex items-center p-3 mb-2 gap-2 bg-blue-50 text-gray-700 hover:text-blue-700 rounded"
           >
             <FaCar />
             Cars
           </Link>
           <Link
             to="/categories"
-            className="flex items-center p-3 mb-2 gap-2 bg-gray-100 text-gray-700 rounded"
+            className="flex items-center p-3 mb-2 gap-2 bg-blue-50 hover:text-blue-700  rounded"
           >
             <BiSolidCategoryAlt />
             Categories
           </Link>
           <Link
             to="/user/profile"
-            className="flex items-center p-3 mb-2 bg-gray-100 text-gray-700 rounded"
+            className="flex items-center p-3 mb-2 bg-blue-50 text-blue-700 rounded"
           >
             <svg
               className="w-5 h-5 mr-2"
@@ -127,7 +255,7 @@ const ProfilePage = () => {
 
           <Link
             to="/user/bookings"
-            className="flex items-center p-3 text-gray-700 hover:bg-gray-100 rounded"
+            className="flex items-center p-3 hover:text-blue-700 bg-blue-50 rounded"
           >
             <svg
               className="w-5 h-5 mr-2"
@@ -147,38 +275,126 @@ const ProfilePage = () => {
         </nav>
       </div>
 
+      {/* Mobile navigation - visible only on small screens */}
+      <div className="md:hidden bg-white shadow-md p-4">
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-xl font-bold text-gray-800">My Account</h1>
+        </div>
+        <div className="flex overflow-x-auto space-x-4 pb-2">
+          <Link
+            to="/cars"
+            className="flex items-center p-2 gap-2 bg-gray-100 text-gray-700 hover:text-blue-700 rounded whitespace-nowrap"
+          >
+            <FaCar />
+            Cars
+          </Link>
+          <Link
+            to="/categories"
+            className="flex items-center p-2 gap-2 bg-gray-100 text-gray-700 hover:text-blue-700 rounded whitespace-nowrap"
+          >
+            <BiSolidCategoryAlt />
+            Categories
+          </Link>
+          <Link
+            to="/user/profile"
+            className="flex items-center p-2 bg-blue-50 text-blue-700 rounded whitespace-nowrap"
+          >
+            <svg
+              className="w-4 h-4 mr-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                clipRule="evenodd"
+              ></path>
+            </svg>
+            Profile
+          </Link>
+          <Link
+            to="/user/bookings"
+            className="flex items-center p-2 text-gray-700 hover:text-blue-700 bg-blue-50 rounded whitespace-nowrap"
+          >
+            <svg
+              className="w-4 h-4 mr-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z"></path>
+              <path
+                fillRule="evenodd"
+                d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"
+                clipRule="evenodd"
+              ></path>
+            </svg>
+            Bookings
+          </Link>
+        </div>
+      </div>
+
       {/* Main Content */}
-      <div className="flex-1 p-8">
-        <h2 className="text-2xl font-semibold text-gray-700 mb-6">
+      <div className="flex-1 p-4 md:p-8">
+        <h2 className="text-xl md:text-2xl font-semibold text-gray-700 mb-4 md:mb-6">
           Profile Details
         </h2>
 
-        <div className="flex mb-8">
-          <div className="mr-8">
-            <div className="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center">
+        <div className="flex flex-col md:flex-row mb-6 md:mb-8">
+          <div className="mb-6 md:mb-0 md:mr-8 flex flex-col items-center">
+            <div className="w-24 h-24 md:w-32 md:h-32 bg-gray-100 rounded-full flex items-center justify-center overflow-hidden">
               {profileData.photoURL ? (
                 <img
                   src={profileData.photoURL}
                   alt="Profile"
-                  className="w-full h-full rounded-full object-cover"
+                  className="w-full h-full object-cover"
                 />
               ) : (
-                <svg
-                  className="w-16 h-16 text-gray-400"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
+                <div className="w-full h-full bg-blue-500 flex items-center justify-center text-white text-3xl font-bold">
+                  {getInitials()}
+                </div>
               )}
             </div>
-            <button className="mt-4 px-4 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-50">
-              Upload Image
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              accept="image/*"
+              className="hidden"
+            />
+            <button
+              onClick={triggerFileInput}
+              disabled={imageLoading}
+              className="mt-4 px-4 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-50 transition-colors duration-200 flex items-center justify-center"
+            >
+              {imageLoading ? (
+                <span className="flex items-center">
+                  <svg
+                    className="animate-spin -ml-1 mr-2 h-4 w-4 text-blue-500"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Uploading...
+                </span>
+              ) : (
+                "Upload Image"
+              )}
             </button>
           </div>
 
@@ -254,11 +470,11 @@ const ProfilePage = () => {
 
               <div>
                 <label className="block text-gray-700 mb-2">Gender</label>
-                <div className="flex space-x-4">
+                <div className="flex flex-wrap space-x-0 space-y-2 sm:space-y-0 sm:space-x-4">
                   <button
                     type="button"
                     onClick={() => handleGenderChange("Male")}
-                    className={`px-4 py-1 rounded ${
+                    className={`px-4 py-1 rounded mb-2 sm:mb-0 ${
                       profileData.gender === "Male"
                         ? "bg-blue-500 text-white"
                         : "bg-gray-200 text-gray-700"
@@ -302,10 +518,12 @@ const ProfilePage = () => {
                       onChange={handleChange}
                       className="w-full p-2 border rounded"
                     >
-                      <option value="Ghana">Ghana</option>
-                      <option value="Nigeria">Nigeria</option>
-                      <option value="Kenya">Kenya</option>
-                      <option value="South Africa">South Africa</option>
+                      <option value="">Select Country</option>
+                      {countries.map((country) => (
+                        <option key={country.id} value={country.id}>
+                          {country.name}
+                        </option>
+                      ))}
                     </select>
                   </div>
                   <div>
@@ -315,12 +533,14 @@ const ProfilePage = () => {
                       value={profileData.region}
                       onChange={handleChange}
                       className="w-full p-2 border rounded"
+                      disabled={!profileData.country || regions.length === 0}
                     >
-                      <option value="">Your Region</option>
-                      <option value="Greater Accra">Greater Accra</option>
-                      <option value="Ashanti">Ashanti</option>
-                      <option value="Western">Western</option>
-                      <option value="Eastern">Eastern</option>
+                      <option value="">Select Region</option>
+                      {regions.map((region) => (
+                        <option key={region.id} value={region.id}>
+                          {region.name}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -357,7 +577,7 @@ const ProfilePage = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none disabled:opacity-50"
+                  className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none disabled:opacity-50 transition-colors duration-200"
                 >
                   {loading ? "Updating..." : "Update Profile"}
                 </button>
