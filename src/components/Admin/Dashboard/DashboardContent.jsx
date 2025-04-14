@@ -7,8 +7,8 @@ import {
   DollarSign,
   ArrowRight,
 } from "lucide-react";
- import { supabaseUrl } from "../../../utils/supabase"; // Adjust the import
- 
+  // Adjust the import
+
 const rentalData = {
   car: {
     name: "Nissan GT-R",
@@ -30,7 +30,7 @@ const rentalData = {
 };
 
 // Manually create the public URL
-const publicUrl = `${supabaseUrl}/storage/v1/object/public/car-images/${data.path}`;
+// const publicUrl = `${supabaseUrl}/storage/v1/object/public/car-images/${data.path}`;
 
 const topCarRentals = [
   { type: "Sport Car", count: 17439, color: "#0a2463" },
