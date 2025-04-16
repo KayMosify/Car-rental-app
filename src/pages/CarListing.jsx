@@ -38,8 +38,13 @@ const CarListing = () => {
     return (
       <div className="mb-10">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold">{title}</h2>
-          <Link to={viewAllLink} className="text-blue-600 hover:underline">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+            {title}
+          </h2>
+          <Link
+            to={viewAllLink}
+            className="text-blue-600 dark:text-blue-400 hover:underline"
+          >
             View All
           </Link>
         </div>
@@ -49,7 +54,7 @@ const CarListing = () => {
             {[...Array(4)].map((_, index) => (
               <div
                 key={index}
-                className="bg-gray-200 h-80 rounded-lg animate-pulse"
+                className="bg-gray-200 dark:bg-gray-700 h-80 rounded-lg animate-pulse"
               ></div>
             ))}
           </div>
@@ -65,13 +70,13 @@ const CarListing = () => {
   };
 
   return (
-    <div>
+    <div className="bg-white dark:bg-gray-900">
       <CarListingHero />
       <SearchBar2 />
       <div className="text-center my-8">
         <Link
           to="/categories"
-          className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors"
+          className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 transition-colors"
         >
           Browse All Categories
         </Link>

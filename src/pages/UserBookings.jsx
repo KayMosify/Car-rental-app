@@ -22,7 +22,7 @@ const UserBookings = () => {
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
+        <div className="bg-white dark:bg-gray-800 shadow-lg dark:shadow-gray-700/50 rounded-lg p-6">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
             My Bookings
           </h1>
@@ -31,7 +31,7 @@ const UserBookings = () => {
             {mockBookings.map((booking) => (
               <div
                 key={booking.id}
-                className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-700"
+                className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
               >
                 <div className="flex justify-between items-center">
                   <div>
@@ -46,8 +46,8 @@ const UserBookings = () => {
                     <span
                       className={`px-2 py-1 rounded-full text-sm ${
                         booking.status === "Active"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-blue-100 text-blue-800"
+                          ? "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200"
+                          : "bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200"
                       }`}
                     >
                       {booking.status}

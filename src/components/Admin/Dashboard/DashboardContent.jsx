@@ -7,7 +7,6 @@ import {
   DollarSign,
   ArrowRight,
 } from "lucide-react";
-  // Adjust the import
 
 const rentalData = {
   car: {
@@ -28,9 +27,6 @@ const rentalData = {
   },
   totalPrice: "$80.00",
 };
-
-// Manually create the public URL
-// const publicUrl = `${supabaseUrl}/storage/v1/object/public/car-images/${data.path}`;
 
 const topCarRentals = [
   { type: "Sport Car", count: 17439, color: "#0a2463" },
@@ -373,19 +369,25 @@ const DashboardContent = () => {
 
   return (
     <div className="w-full px-4">
-      <h2 className="text-2xl font-bold mb-6">Provider Dashboard</h2>
+      <h2 className="text-2xl font-bold mb-6 dark:text-white">
+        Provider Dashboard
+      </h2>
 
       {/* Top Section: Map and Chart */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         {/* Map */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold mb-4">Vehicle Location</h3>
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          <h3 className="text-lg font-semibold mb-4 dark:text-white">
+            Vehicle Location
+          </h3>
           <MapComponent />
         </div>
 
         {/* Top 5 Car Rental Chart */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold mb-4">Top 5 Car Rental</h3>
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          <h3 className="text-lg font-semibold mb-4 dark:text-white">
+            Top 5 Car Rental
+          </h3>
           <DonutChart data={topCarRentals} totalRentals={totalRentals} />
           <ul className="mt-4 grid grid-cols-2 gap-2">
             {topCarRentals.map((item, index) => (
@@ -394,7 +396,7 @@ const DashboardContent = () => {
                   className="w-3 h-3 rounded-full mr-2"
                   style={{ backgroundColor: item.color }}
                 ></span>
-                <span className="text-sm">
+                <span className="text-sm dark:text-gray-300">
                   {item.type}: {item.count.toLocaleString()}
                 </span>
               </li>
@@ -406,14 +408,16 @@ const DashboardContent = () => {
       {/* Bottom Section: Fleet Status and Recent Transactions */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Left side: Selected car details or Fleet Status */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
           {viewMode === "carDetails" && selectedTransaction ? (
             <>
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold">Rental Details</h3>
+                <h3 className="text-lg font-semibold dark:text-white">
+                  Rental Details
+                </h3>
                 <button
                   onClick={() => setViewMode("dashboard")}
-                  className="text-blue-600 text-sm flex items-center"
+                  className="text-blue-600 dark:text-blue-400 text-sm flex items-center"
                 >
                   <ArrowRight className="w-4 h-4 mr-1" /> Back to Dashboard
                 </button>
@@ -426,16 +430,18 @@ const DashboardContent = () => {
                 />
               </div>
               <div className="mb-4">
-                <h4 className="text-xl font-bold">
+                <h4 className="text-xl font-bold dark:text-white">
                   {selectedTransaction.name}
                 </h4>
-                <p className="text-gray-600">{selectedTransaction.type}</p>
+                <p className="text-gray-600 dark:text-gray-300">
+                  {selectedTransaction.type}
+                </p>
               </div>
-              <div className="mb-4 p-3 bg-blue-50 rounded-lg">
-                <p className="font-medium text-blue-800">
+              <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/50 rounded-lg">
+                <p className="font-medium text-blue-800 dark:text-blue-200">
                   Customer: {selectedTransaction.details.customerName}
                 </p>
-                <p className="text-sm text-blue-700">
+                <p className="text-sm text-blue-700 dark:text-blue-300">
                   Status: {selectedTransaction.details.status}
                 </p>
               </div>
@@ -504,34 +510,44 @@ const DashboardContent = () => {
             </>
           ) : (
             <>
-              <h3 className="text-lg font-semibold mb-4">Fleet Status</h3>
+              <h3 className="text-lg font-semibold mb-4 dark:text-white">
+                Fleet Status
+              </h3>
               <div className="flex justify-between mb-6">
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-                    <p className="text-xl font-bold text-green-600">2</p>
+                  <div className="w-16 h-16 bg-green-100 dark:bg-green-900/50 rounded-full flex items-center justify-center mx-auto">
+                    <p className="text-xl font-bold text-green-600 dark:text-green-400">
+                      2
+                    </p>
                   </div>
-                  <p className="mt-2 text-sm">Available</p>
+                  <p className="mt-2 text-sm dark:text-gray-300">Available</p>
                 </div>
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
-                    <p className="text-xl font-bold text-blue-600">2</p>
+                  <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/50 rounded-full flex items-center justify-center mx-auto">
+                    <p className="text-xl font-bold text-blue-600 dark:text-blue-400">
+                      2
+                    </p>
                   </div>
-                  <p className="mt-2 text-sm">Rented</p>
+                  <p className="mt-2 text-sm dark:text-gray-300">Rented</p>
                 </div>
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto">
-                    <p className="text-xl font-bold text-yellow-600">1</p>
+                  <div className="w-16 h-16 bg-yellow-100 dark:bg-yellow-900/50 rounded-full flex items-center justify-center mx-auto">
+                    <p className="text-xl font-bold text-yellow-600 dark:text-yellow-400">
+                      1
+                    </p>
                   </div>
-                  <p className="mt-2 text-sm">Maintenance</p>
+                  <p className="mt-2 text-sm dark:text-gray-300">Maintenance</p>
                 </div>
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto">
-                    <p className="text-xl font-bold text-purple-600">5</p>
+                  <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900/50 rounded-full flex items-center justify-center mx-auto">
+                    <p className="text-xl font-bold text-purple-600 dark:text-purple-400">
+                      5
+                    </p>
                   </div>
-                  <p className="mt-2 text-sm">Total</p>
+                  <p className="mt-2 text-sm dark:text-gray-300">Total</p>
                 </div>
               </div>
-              <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 flex items-center justify-center">
+              <button className="w-full bg-blue-600 dark:bg-blue-700 text-white py-2 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-800 flex items-center justify-center">
                 <Car className="w-5 h-5 mr-2" />
                 View Car Inventory
               </button>
@@ -540,10 +556,12 @@ const DashboardContent = () => {
         </div>
 
         {/* Recent Transactions */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold">Recent Transactions</h3>
-            <button className="text-blue-600 text-sm flex items-center">
+            <h3 className="text-lg font-semibold dark:text-white">
+              Recent Transactions
+            </h3>
+            <button className="text-blue-600 dark:text-blue-400 text-sm flex items-center">
               View All
             </button>
           </div>
@@ -553,10 +571,10 @@ const DashboardContent = () => {
               {recentTransactions.map((transaction, index) => (
                 <li
                   key={index}
-                  className={`flex items-center p-2 rounded-lg hover:bg-blue-50 cursor-pointer transition-colors ${
+                  className={`flex items-center p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 cursor-pointer transition-colors ${
                     selectedTransaction === transaction &&
                     viewMode === "carDetails"
-                      ? "bg-blue-50 border border-blue-200"
+                      ? "bg-blue-50 dark:bg-blue-900/50 border border-blue-200 dark:border-blue-700"
                       : ""
                   }`}
                   onClick={() => {
@@ -565,7 +583,7 @@ const DashboardContent = () => {
                   }}
                 >
                   <img
-                    src={transaction.image_url}
+                    src={transaction.image}
                     alt={transaction.name}
                     className="w-16 h-12 object-cover rounded-lg mr-4"
                   />
@@ -597,16 +615,16 @@ const DashboardContent = () => {
             </ul>
           ) : (
             <div className="flex flex-col items-center justify-center py-8">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                <Car className="w-8 h-8 text-gray-400" />
+              <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-4">
+                <Car className="w-8 h-8 text-gray-400 dark:text-gray-500" />
               </div>
-              <p className="text-lg font-medium text-gray-600">
+              <p className="text-lg font-medium text-gray-600 dark:text-gray-300">
                 No cars booked yet
               </p>
-              <p className="text-sm text-gray-500 text-center mt-2">
+              <p className="text-sm text-gray-500 dark:text-gray-400 text-center mt-2">
                 When customers book cars, they will appear here
               </p>
-              <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center">
+              <button className="mt-4 bg-blue-600 dark:bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-800 flex items-center">
                 <DollarSign className="w-4 h-4 mr-2" />
                 Add New Booking
               </button>
@@ -615,7 +633,7 @@ const DashboardContent = () => {
 
           <div className="mt-6 text-center">
             <button
-              className="text-blue-600 text-sm"
+              className="text-blue-600 dark:text-blue-400 text-sm"
               onClick={() => setHasBookings(!hasBookings)}
             >
               {hasBookings ? "Show Empty State" : "Show Bookings"}

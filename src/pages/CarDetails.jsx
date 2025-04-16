@@ -413,25 +413,25 @@ function CarDetails() {
           <div className="grid grid-cols-2 gap-4 mb-4">
             <p className="text-gray-600 dark:text-gray-300 mb-2 ">
               TypeCar{" "}
-              <span className="text-black font-medium ml-4">
+              <span className="text-black dark:text-gray-300  font-medium ml-4">
                 {car?.car_type}
               </span>
             </p>
             <p className="text-gray-600 dark:text-gray-300 mb-2">
               Capacity{" "}
-              <span className="text-black font-medium ml-4">
+              <span className="text-black dark:text-gray-300  font-medium ml-4">
                 {car?.capacity} Person
               </span>
             </p>
             <p className="text-gray-600 dark:text-gray-300 mb-2">
               Steering{" "}
-              <span className="text-black font-medium ml-4">
+              <span className="text-black dark:text-gray-300  font-medium ml-4">
                 {car?.steering_type}
               </span>
             </p>
-            <p className="text-gray-600 dark:text-gray-300 mb-2">
+            <p className="text-gray-600  dark:text-gray-300 mb-2">
               Gasoline{" "}
-              <span className="text-black font-medium ml-4">
+              <span className="text-black dark:text-gray-300  font-medium ml-4">
                 {car?.fuel_capacity}L
               </span>
             </p>

@@ -26,8 +26,8 @@ const AdminCars = () => {
     <div className="min-h-screen bg-gray-50">
       <div className="flex">
         {/* <AdminSidebar /> */}
-        <div className="flex-1">
-          <div className="py-6">
+        <div className="flex-1 dark:bg-gray-700">
+          <div className="py-6 dark:bg-gray-700">
             <AllCars />
           </div>
         </div>

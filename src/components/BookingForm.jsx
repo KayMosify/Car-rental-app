@@ -247,7 +247,7 @@ function BookingForm() {
     );
 
   return (
-    <div className="w-full bg-gray-100 font-sans pb-8">
+    <div className="w-full bg-gray-100 dark:bg-gray-900 font-sans pb-8">
       <div className="mx-auto px-4">
         <form
           onSubmit={handleSubmit}
@@ -256,28 +256,34 @@ function BookingForm() {
           {/* Left Column - Form */}
           <div className="w-full lg:w-2/3">
             {/* Billing Info */}
-            <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-              <h2 className="text-lg font-bold mb-1">Billing Info</h2>
-              <p className="text-sm text-gray-500 mb-4">
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-6">
+              <h2 className="text-lg font-bold mb-1 dark:text-white">
+                Billing Info
+              </h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
                 Please enter your billing info
               </p>
-              <p className="text-xs text-gray-400 mb-5">Step 1 of 4</p>
+              <p className="text-xs text-gray-400 dark:text-gray-500 mb-5">
+                Step 1 of 4
+              </p>
 
               <div className="grid md:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label className="block text-sm font-medium mb-1">Name</label>
+                  <label className="block text-sm font-medium mb-1 dark:text-gray-300">
+                    Name
+                  </label>
                   <input
                     type="text"
                     name="name"
                     placeholder="Your name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full p-3 rounded-md border border-gray-300 text-sm bg-gray-50"
+                    className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 text-sm bg-gray-50 dark:bg-gray-700 dark:text-white"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">
+                  <label className="block text-sm font-medium mb-1 dark:text-gray-300">
                     Phone Number
                   </label>
                   <input
@@ -286,14 +292,14 @@ function BookingForm() {
                     placeholder="Phone number"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full p-3 rounded-md border border-gray-300 text-sm bg-gray-50"
+                    className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 text-sm bg-gray-50 dark:bg-gray-700 dark:text-white"
                     required
                   />
                 </div>
               </div>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-1">
+                  <label className="block text-sm font-medium mb-1 dark:text-gray-300">
                     Address
                   </label>
                   <input
@@ -302,12 +308,12 @@ function BookingForm() {
                     placeholder="Address"
                     value={formData.address}
                     onChange={handleChange}
-                    className="w-full p-3 rounded-md border border-gray-300 text-sm bg-gray-50"
+                    className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 text-sm bg-gray-50 dark:bg-gray-700 dark:text-white"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">
+                  <label className="block text-sm font-medium mb-1 dark:text-gray-300">
                     Town / City
                   </label>
                   <input
@@ -316,7 +322,7 @@ function BookingForm() {
                     placeholder="Town or city"
                     value={formData.townCity}
                     onChange={handleChange}
-                    className="w-full p-3 rounded-md border border-gray-300 text-sm bg-gray-50"
+                    className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 text-sm bg-gray-50 dark:bg-gray-700 dark:text-white"
                     required
                   />
                 </div>
@@ -324,12 +330,16 @@ function BookingForm() {
             </div>
 
             {/* Rental Info */}
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h2 className="text-lg font-bold mb-1">Rental Info</h2>
-              <p className="text-sm text-gray-500 mb-4">
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+              <h2 className="text-lg font-bold mb-1 dark:text-white">
+                Rental Info
+              </h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
                 Please select your rental date
               </p>
-              <p className="text-xs text-gray-400 mb-5">Step 2 of 4</p>
+              <p className="text-xs text-gray-400 dark:text-gray-500 mb-5">
+                Step 2 of 4
+              </p>
 
               {/* Pick-Up Section */}
               <div className="mb-6">
@@ -341,11 +351,11 @@ function BookingForm() {
                     value="pickUp"
                     checked={formData.rentalType === "pickUp"}
                     onChange={handleChange}
-                    className="w-4 h-4 text-blue-600"
+                    className="w-4 h-4 text-blue-600 dark:text-blue-500"
                   />
                   <label
                     htmlFor="pickUp"
-                    className="ml-2 text-base font-medium text-blue-600"
+                    className="ml-2 text-base font-medium text-blue-600 dark:text-blue-500"
                   >
                     Pick - Up
                   </label>
@@ -353,7 +363,7 @@ function BookingForm() {
 
                 {/* Country Selection for Pickup */}
                 <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">
+                  <label className="block text-sm font-medium mb-1 dark:text-gray-300">
                     Country
                   </label>
                   <div className="relative">
@@ -361,7 +371,7 @@ function BookingForm() {
                       name="pickupCountry"
                       value={formData.pickupCountry}
                       onChange={handleChange}
-                      className="w-full p-3 rounded-md border border-gray-300 text-sm bg-gray-50 appearance-none pr-10"
+                      className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 text-sm bg-gray-50 dark:bg-gray-700 dark:text-white appearance-none pr-10"
                       required
                     >
                       <option value="">Select a country</option>
@@ -371,7 +381,7 @@ function BookingForm() {
                         </option>
                       ))}
                     </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 dark:text-gray-300">
                       <svg
                         className="w-4 h-4"
                         fill="none"
@@ -391,7 +401,7 @@ function BookingForm() {
 
                 <div className="grid md:grid-cols-2 gap-4 mb-4">
                   <div>
-                    <label className="block text-sm font-medium mb-1">
+                    <label className="block text-sm font-medium mb-1 dark:text-gray-300">
                       Regions/Locations
                     </label>
                     <div className="relative">
@@ -399,7 +409,7 @@ function BookingForm() {
                         name="pickUpLocation"
                         value={formData.pickUpLocation}
                         onChange={handleChange}
-                        className="w-full p-3 rounded-md border border-gray-300 text-sm bg-gray-50 appearance-none pr-10"
+                        className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 text-sm bg-gray-50 dark:bg-gray-700 dark:text-white appearance-none pr-10"
                         required
                         disabled={!formData.pickupCountry}
                       >
@@ -410,7 +420,7 @@ function BookingForm() {
                           </option>
                         ))}
                       </select>
-                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 dark:text-gray-300">
                         <svg
                           className="w-4 h-4"
                           fill="none"
@@ -428,7 +438,7 @@ function BookingForm() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">
+                    <label className="block text-sm font-medium mb-1 dark:text-gray-300">
                       Date
                     </label>
                     <div className="relative">
@@ -437,7 +447,7 @@ function BookingForm() {
                         name="pickUpDate"
                         value={formData.pickUpDate}
                         onChange={handleChange}
-                        className="w-full p-3 rounded-md border border-gray-300 text-sm bg-gray-50 appearance-none"
+                        className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 text-sm bg-gray-50 dark:bg-gray-700 dark:text-white appearance-none"
                         required
                       />
                     </div>
@@ -445,13 +455,15 @@ function BookingForm() {
                 </div>
 
                 <div className="mb-6">
-                  <label className="block text-sm font-medium mb-1">Time</label>
+                  <label className="block text-sm font-medium mb-1 dark:text-gray-300">
+                    Time
+                  </label>
                   <div className="relative">
                     <select
                       name="pickUpTime"
                       value={formData.pickUpTime}
                       onChange={handleChange}
-                      className="w-full p-3 rounded-md border border-gray-300 text-sm bg-gray-50 appearance-none pr-10"
+                      className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 text-sm bg-gray-50 dark:bg-gray-700 dark:text-white appearance-none pr-10"
                       required
                     >
                       <option value="">Select your time</option>
@@ -465,7 +477,7 @@ function BookingForm() {
                       <option value="16:00">04:00 PM</option>
                       <option value="17:00">05:00 PM</option>
                     </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 dark:text-gray-300">
                       <svg
                         className="w-4 h-4"
                         fill="none"
@@ -494,11 +506,11 @@ function BookingForm() {
                     value="dropOff"
                     checked={formData.rentalType === "dropOff"}
                     onChange={handleChange}
-                    className="w-4 h-4 text-blue-600"
+                    className="w-4 h-4 text-blue-600 dark:text-blue-500"
                   />
                   <label
                     htmlFor="dropOff"
-                    className="ml-2 text-base font-medium text-blue-600"
+                    className="ml-2 text-base font-medium text-blue-600 dark:text-blue-500"
                   >
                     Drop - Off
                   </label>
@@ -506,7 +518,7 @@ function BookingForm() {
 
                 {/* Country Selection for Dropoff */}
                 <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">
+                  <label className="block text-sm font-medium mb-1 dark:text-gray-300">
                     Country
                   </label>
                   <div className="relative">
@@ -514,7 +526,7 @@ function BookingForm() {
                       name="dropoffCountry"
                       value={formData.dropoffCountry}
                       onChange={handleChange}
-                      className="w-full p-3 rounded-md border border-gray-300 text-sm bg-gray-50 appearance-none pr-10"
+                      className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 text-sm bg-gray-50 dark:bg-gray-700 dark:text-white appearance-none pr-10"
                       required
                     >
                       <option value="">Select a country</option>
@@ -524,7 +536,7 @@ function BookingForm() {
                         </option>
                       ))}
                     </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 dark:text-gray-300">
                       <svg
                         className="w-4 h-4"
                         fill="none"
@@ -544,7 +556,7 @@ function BookingForm() {
 
                 <div className="grid md:grid-cols-2 gap-4 mb-4">
                   <div>
-                    <label className="block text-sm font-medium mb-1">
+                    <label className="block text-sm font-medium mb-1 dark:text-gray-300">
                       Regions/Locations
                     </label>
                     <div className="relative">
@@ -552,7 +564,7 @@ function BookingForm() {
                         name="dropOffLocation"
                         value={formData.dropOffLocation}
                         onChange={handleChange}
-                        className="w-full p-3 rounded-md border border-gray-300 text-sm bg-gray-50 appearance-none pr-10"
+                        className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 text-sm bg-gray-50 dark:bg-gray-700 dark:text-white appearance-none pr-10"
                         required
                         disabled={!formData.dropoffCountry}
                       >
@@ -563,7 +575,7 @@ function BookingForm() {
                           </option>
                         ))}
                       </select>
-                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 dark:text-gray-300">
                         <svg
                           className="w-4 h-4"
                           fill="none"
@@ -581,7 +593,7 @@ function BookingForm() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">
+                    <label className="block text-sm font-medium mb-1 dark:text-gray-300">
                       Date
                     </label>
                     <div className="relative">
@@ -590,7 +602,7 @@ function BookingForm() {
                         name="dropOffDate"
                         value={formData.dropOffDate}
                         onChange={handleChange}
-                        className="w-full p-3 rounded-md border border-gray-300 text-sm bg-gray-50 appearance-none"
+                        className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 text-sm bg-gray-50 dark:bg-gray-700 dark:text-white appearance-none"
                         required
                       />
                     </div>
@@ -598,13 +610,15 @@ function BookingForm() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1">Time</label>
+                  <label className="block text-sm font-medium mb-1 dark:text-gray-300">
+                    Time
+                  </label>
                   <div className="relative">
                     <select
                       name="dropOffTime"
                       value={formData.dropOffTime}
                       onChange={handleChange}
-                      className="w-full p-3 rounded-md border border-gray-300 text-sm bg-gray-50 appearance-none pr-10"
+                      className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 text-sm bg-gray-50 dark:bg-gray-700 dark:text-white appearance-none pr-10"
                       required
                     >
                       <option value="">Select your time</option>
@@ -618,7 +632,7 @@ function BookingForm() {
                       <option value="16:00">04:00 PM</option>
                       <option value="17:00">05:00 PM</option>
                     </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 dark:text-gray-300">
                       <svg
                         className="w-4 h-4"
                         fill="none"
@@ -639,11 +653,13 @@ function BookingForm() {
             </div>
           </div>
 
-          {/* Right Column - Summary - Unchanged */}
+          {/* Right Column - Summary */}
           <div className="w-full lg:w-1/3">
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h2 className="text-lg font-bold mb-1">RENTAL SUMMARY</h2>
-              <p className="text-xs text-gray-500 mb-5">
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+              <h2 className="text-lg font-bold mb-1 dark:text-white">
+                RENTAL SUMMARY
+              </h2>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mb-5">
                 Prices may change depending on the length of the rental and the
                 price of your rental car.
               </p>
@@ -656,22 +672,22 @@ function BookingForm() {
                     className="w-24 h-14 mr-4 object-cover rounded"
                   />
                   <div>
-                    <h3 className="text-lg font-bold">
+                    <h3 className="text-lg font-bold dark:text-white">
                       {carDetails.name || "Rental Car"}
                     </h3>
-                    <div className="text-xs text-gray-500">
+                    <div className="text-xs text-gray-500 dark:text-gray-400">
                       <span>★★★★★</span> 440+ Reviewer
                     </div>
                   </div>
                 </div>
               )}
 
-              <div className="border-t border-gray-200 pt-4">
-                <div className="flex justify-between text-sm mb-2">
+              <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
+                <div className="flex justify-between text-sm mb-2 dark:text-gray-300">
                   <span>Subtotal</span>
                   <span>${totalPrice.toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between text-sm mb-5">
+                <div className="flex justify-between text-sm mb-5 dark:text-gray-300">
                   <span>Tax</span>
                   <span>$0</span>
                 </div>
@@ -683,11 +699,11 @@ function BookingForm() {
                     placeholder="Promo code"
                     value={formData.promoCode}
                     onChange={handleChange}
-                    className="flex-grow p-2 border border-gray-300 rounded-l-md text-sm"
+                    className="flex-grow p-2 border border-gray-300 dark:border-gray-600 rounded-l-md text-sm dark:bg-gray-700 dark:text-white"
                   />
                   <button
                     type="button"
-                    className="p-2 bg-blue-600 text-white rounded-r-md hover:bg-blue-700 transition"
+                    className="p-2 bg-blue-600 dark:bg-blue-700 text-white rounded-r-md hover:bg-blue-700 dark:hover:bg-blue-800 transition"
                     onClick={applyPromoCode}
                     disabled={applyingPromo || !formData.promoCode}
                   >
@@ -696,20 +712,20 @@ function BookingForm() {
                 </div>
               </div>
 
-              <div className="border-t border-gray-200 pt-4 mb-5">
-                <div className="flex justify-between text-base font-bold mb-2">
+              <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mb-5">
+                <div className="flex justify-between text-base font-bold mb-2 dark:text-white">
                   <span>TOTAL RENTAL PRICE</span>
-                  <span className="text-xl text-blue-600">
+                  <span className="text-xl text-blue-600 dark:text-blue-500">
                     ${totalPrice.toFixed(2)}
                   </span>
                 </div>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-gray-500 dark:text-gray-400">
                   Overall price and includes rental discount
                 </p>
               </div>
 
               {error && (
-                <div className="bg-red-50 text-red-700 p-3 rounded-md mb-4">
+                <div className="bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 p-3 rounded-md mb-4">
                   {error}
                 </div>
               )}
@@ -717,7 +733,7 @@ function BookingForm() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-md transition duration-300"
+                className="w-full bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-800 text-white font-medium py-3 px-4 rounded-md transition duration-300"
               >
                 {loading ? "Processing..." : "Rent Now"}
               </button>

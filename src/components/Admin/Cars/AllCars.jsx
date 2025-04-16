@@ -135,114 +135,119 @@ const AllCars = () => {
 
   if (loading) {
     return (
-      <div className="w-full h-64 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      <div className="w-full dark:bg-gray-700 h-64 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 dark:border-blue-400"></div>
       </div>
     );
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full dark:bg-gray-700">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6">
         <div className="flex items-center mb-4 sm:mb-0">
           <button className="mr-4">
-            <FaArrowLeft className="text-gray-600" />
+            <FaArrowLeft className="text-gray-600 dark:text-gray-400" />
           </button>
-          <h2 className="text-xl md:text-2xl font-bold">All Cars</h2>
+          <h2 className="text-xl md:text-2xl font-bold dark:text-white">
+            All Cars
+          </h2>
         </div>
 
         <button
           onClick={openAddModal}
-          className="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition shadow-md w-full sm:w-auto"
+          className="flex items-center justify-center bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white py-2 px-4 rounded-lg transition shadow-md w-full sm:w-auto"
         >
           <FaPlus className="mr-2" /> Add New Car
         </button>
       </div>
 
-      <div className="bg-white p-4 md:p-6 rounded-lg shadow-md mb-6">
+      <div className="bg-white dark:bg-gray-800 p-4 md:p-6 rounded-lg shadow-md dark:shadow-gray-700/50 mb-6">
         {cars.length === 0 ? (
-          <div className="text-center py-8 text-gray-500">
+          <div className="text-center py-8 text-gray-500 dark:text-gray-400">
             No cars found in the database
           </div>
         ) : (
           <div className="overflow-x-auto -mx-4 md:mx-0">
             <div className="inline-block min-w-full align-middle">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-100">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead className="bg-gray-100 dark:bg-gray-700">
                   <tr>
                     <th
                       scope="col"
-                      className="py-3 px-4 text-left text-xs font-medium text-gray-600 uppercase tracking-wider whitespace-nowrap"
+                      className="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap"
                     >
                       Car ID
                     </th>
                     <th
                       scope="col"
-                      className="py-3 px-4 text-left text-xs font-medium text-gray-600 uppercase tracking-wider whitespace-nowrap"
+                      className="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap"
                     >
                       Car
                     </th>
                     <th
                       scope="col"
-                      className="py-3 px-4 text-left text-xs font-medium text-gray-600 uppercase tracking-wider whitespace-nowrap"
+                      className="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap"
                     >
                       Steering
                     </th>
                     <th
                       scope="col"
-                      className="py-3 px-4 text-left text-xs font-medium text-gray-600 uppercase tracking-wider whitespace-nowrap"
+                      className="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap"
                     >
                       Year
                     </th>
                     <th
                       scope="col"
-                      className="py-3 px-4 text-left text-xs font-medium text-gray-600 uppercase tracking-wider whitespace-nowrap"
+                      className="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap"
                     >
                       Fuel Capacity
                     </th>
                     <th
                       scope="col"
-                      className="py-3 px-4 text-left text-xs font-medium text-gray-600 uppercase tracking-wider whitespace-nowrap"
+                      className="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap"
                     >
                       Status
                     </th>
                     <th
                       scope="col"
-                      className="py-3 px-4 text-right text-xs font-medium text-gray-600 uppercase tracking-wider whitespace-nowrap"
+                      className="py-3 px-4 text-right text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap"
                     >
                       Price
                     </th>
                     <th
                       scope="col"
-                      className="py-3 px-4 text-center text-xs font-medium text-gray-600 uppercase tracking-wider whitespace-nowrap"
+                      className="py-3 px-4 text-center text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap"
                     >
                       Actions
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                   {cars.map((car) => (
-                    <tr key={car.id} className="hover:bg-gray-50">
-                      <td className="py-3 px-4 whitespace-nowrap text-sm text-gray-600">
+                    <tr
+                      key={car.id}
+                      className="hover:bg-gray-50 dark:hover:bg-gray-700"
+                    >
+                      <td className="py-3 px-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
                         {car.id}
                       </td>
                       <td className="py-3 px-4 whitespace-nowrap">
                         <div>
-                          <p className="text-sm font-medium text-gray-900">
+                          <p className="text-sm font-medium text-gray-900 dark:text-white">
                             {car.name}
                           </p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-gray-500 dark:text-gray-400">
                             {car.carType || car.car_type}
                           </p>
                         </div>
                       </td>
-                      <td className="py-3 px-4 whitespace-nowrap text-sm text-gray-600">
+                      <td className="py-3 px-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
                         {car.steering_type || "-"}
                       </td>
-                      <td className="py-3 px-4 whitespace-nowrap text-sm text-gray-600">
+                      <td className="py-3 px-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
                         {car.year || "-"}
                       </td>
-                      <td className="py-3 px-4 whitespace-nowrap text-sm text-gray-600">
+                      <td className="py-3 px-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
                         {car.fuel_capacity || "-"}
                       </td>
                       <td className="py-3 px-4 whitespace-nowrap">
@@ -263,38 +268,34 @@ const AllCars = () => {
                             : car.status || "Unavailable"}
                         </span>
                       </td>
-                      <td className="py-3 px-4 whitespace-nowrap text-sm text-gray-600 text-right">
-                        {car.totalPrice || car.price_per_day
-                          ? `$${car.totalPrice || car.price_per_day}/day`
-                          : "-"}
+                      <td className="py-3 px-4 whitespace-nowrap text-sm text-gray-600 dark:text-white text-right">
+                        ${car.price_per_day}/day
                       </td>
                       <td className="py-3 px-4 whitespace-nowrap text-sm text-center">
-                        <div className="flex items-center justify-center space-x-3">
+                        <div className="flex items-center justify-center space-x-2">
                           <button
                             onClick={() => openEditModal(car)}
-                            className="text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                            className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
                             title="Edit car"
                           >
-                            <FaEdit size={16} />
+                            <FaEdit />
                           </button>
-
+                          <button
+                            onClick={() => openDeleteConfirm(car.id)}
+                            className="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300"
+                            title="Delete car"
+                          >
+                            <FaTrash />
+                          </button>
                           {!car.available && (
                             <button
                               onClick={() => handleMarkAvailable(car)}
-                              className="text-green-600 hover:text-green-800 transition-colors duration-200"
+                              className="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300"
                               title="Mark as available"
                             >
-                              <FaCheck size={16} />
+                              <FaCheck />
                             </button>
                           )}
-
-                          <button
-                            onClick={() => openDeleteConfirm(car.id)}
-                            className="text-red-600 hover:text-red-800 transition-colors duration-200"
-                            title="Delete car"
-                          >
-                            <FaTrash size={16} />
-                          </button>
                         </div>
                       </td>
                     </tr>
@@ -306,42 +307,27 @@ const AllCars = () => {
         )}
       </div>
 
-      {/* Add Car Modal */}
-      <AddCarModal
-        isOpen={addModalOpen}
-        onClose={closeAddModal}
-        refreshData={getCarsData}
-      />
-
-      {/* Edit Car Modal */}
-      {selectedCar && (
-        <EditCarModal
-          isOpen={editModalOpen}
-          onClose={closeEditModal}
-          refreshData={getCarsData}
-          car={selectedCar}
-        />
-      )}
-
       {/* Delete Confirmation Modal */}
       {confirmDelete.show && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg p-5 w-full max-w-sm shadow-xl">
-            <h3 className="text-lg font-bold mb-3">Confirm Deletion</h3>
-            <p className="mb-5">
+        <div className="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
+            <h3 className="text-lg font-semibold mb-4 dark:text-white">
+              Confirm Delete
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-6">
               Are you sure you want to delete this car? This action cannot be
               undone.
             </p>
-            <div className="flex justify-end space-x-3">
+            <div className="flex justify-end space-x-4">
               <button
                 onClick={closeDeleteConfirm}
-                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100"
+                className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleDeleteCar(confirmDelete.id)}
-                className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white rounded-lg"
               >
                 Delete
               </button>
@@ -349,7 +335,30 @@ const AllCars = () => {
           </div>
         </div>
       )}
-      <ToastContainer position="top-right" autoClose={3000} />
+
+      <AddCarModal
+        isOpen={addModalOpen}
+        onClose={closeAddModal}
+        onSuccess={getCarsData}
+      />
+      <EditCarModal
+        isOpen={editModalOpen}
+        onClose={closeEditModal}
+        car={selectedCar}
+        onSuccess={getCarsData}
+      />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   );
 };

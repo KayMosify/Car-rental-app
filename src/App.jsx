@@ -242,9 +242,7 @@ const App = () => {
                             element={<CategoriesPage />}
                           />
                           <Route path="/cars/:carId" element={<CarDetails />} />
-                          <Route
-                            path="/rent/:carId"
-                            element={<BookingForm />}
+                          <Route path="/rent/:carId" element={<BookingForm />}
                           />
 
                           {/* Protected User routes */}

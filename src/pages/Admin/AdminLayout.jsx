@@ -38,7 +38,7 @@ const AdminLayout = ({ children }) => {
     <div className="flex flex-col">
       <Navbar />
       <div
-        className={`min-h-screen ${
+        className={` ${
           darkMode ? "dark bg-gray-900 text-white" : "bg-white text-gray-900"
         }`}
       >
@@ -61,19 +61,22 @@ const AdminLayout = ({ children }) => {
           </div>
 
           {/* Main Content */}
-          <div className="flex-1 overflow-auto">
-            <div className="p-4">
+          <div className="flex-1 dark:bg-gray-700 overflow-auto">
+            <div className="p-4 ">
               {/* Hamburger button */}
               <button
-                className="lg:hidden fixed top-4 left-4 z-30 bg-white p-2 rounded-md shadow-md"
+                className="lg:hidden fixed top-16 dark:bg-gray-700 
+                left-4 z-30 bg-white p-1 rounded-md shadow-md"
                 onClick={toggleSidebar}
                 aria-label="Toggle menu"
               >
-                <FaBars className="text-gray-700" />
+                <FaBars className="text-gray-700 dark:text-gray-300" />
               </button>
 
               {/* Main content with proper padding for hamburger on mobile */}
-              <div className="lg:ml-0 mt-12 lg:mt-0">{children}</div>
+              <div className="lg:ml-0 dark:bg-gray-700 mt-12 lg:mt-0">
+                {children}
+              </div>
             </div>
           </div>
         </div>

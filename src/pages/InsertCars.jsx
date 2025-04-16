@@ -108,15 +108,15 @@
 //   };
 
 //   return (
-//     <div className="max-w-[50rem] mx-auto px-4 my-[5rem] py-10 bg-white shadow-lg rounded-lg">
-//       <h2 className="text-2xl font-semibold text-center mb-6">Insert a Car</h2>
+//     <div className="max-w-[50rem] mx-auto px-4 my-[5rem] py-10 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
+//       <h2 className="text-2xl font-semibold text-center mb-6 text-gray-900 dark:text-white">Insert a Car</h2>
 //       <form
 //         onSubmit={handleSubmit}
 //         className="grid grid-cols-1 md:grid-cols-2 gap-4"
 //       >
 //         {/* Car Name */}
 //         <div>
-//           <label className="block text-black dark:text-gray-300">
+//           <label className="block text-gray-700 dark:text-gray-300">
 //             Car Name
 //           </label>
 //           <input
@@ -124,14 +124,14 @@
 //             name="name"
 //             value={formData.name}
 //             onChange={handleChange}
-//             className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-600 dark:text-white"
+//             className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
 //             required
 //           />
 //         </div>
 
 //         {/* Car Type */}
 //         <div>
-//           <label className="block text-black dark:text-gray-300">
+//           <label className="block text-gray-700 dark:text-gray-300">
 //             Car Type
 //           </label>
 //           <input
@@ -139,7 +139,7 @@
 //             name="car_type"
 //             value={formData.car_type}
 //             onChange={handleChange}
-//             className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-600 dark:text-white"
+//             className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
 //             required
 //           />
 //         </div>
@@ -153,26 +153,26 @@
 //             value={formData.model}
 //             onChange={handleChange}
 //             className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-600 dark:text-white"
-            
+
 //           />
 //         </div> */}
 
 //         {/* Year */}
 //         <div>
-//           <label className="block text-black dark:text-gray-300">Year</label>
+//           <label className="block text-gray-700 dark:text-gray-300">Year</label>
 //           <input
 //             type="number"
 //             name="year"
 //             value={formData.year}
 //             onChange={handleChange}
-//             className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-600 dark:text-white"
+//             className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
 //             required
 //           />
 //         </div>
 
 //         {/* Fuel Type */}
 //         <div>
-//           <label className="block text-black dark:text-gray-300">
+//           <label className="block text-gray-700 dark:text-gray-300">
 //             Fuel Type
 //           </label>
 //           <input
