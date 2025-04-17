@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext"; // Import the auth context
+import { useAuth } from "../context/AuthContext";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -9,20 +10,39 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
-  const { login } = useAuth(); // Use the login function from your AuthContext
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
 
+    // Show loading toast that will be dismissed when login completes
+    const loadingToast = toast.loading("Logging in...");
+
     try {
-      // Use the login function from AuthContext instead of directly calling signIn
+      // Use the login function from AuthContext
       await login(email, password);
-      console.log("Login successful");
-      navigate("/"); // Redirect to home page after successful login
+
+      // Dismiss the loading toast
+      toast.dismiss(loadingToast);
+
+      // Show success toast
+      toast.success("Login successful!");
+
+      // Add a slight delay before redirecting for better UX
+      setTimeout(() => {
+        navigate("/"); // Redirect to home page after successful login
+      }, 1000);
     } catch (error) {
       console.error("Login error:", error);
+
+      // Dismiss the loading toast
+      toast.dismiss(loadingToast);
+
+      // Show error toast
+      toast.error("Failed to sign in. Please check your credentials.");
+
       setError(
         error.message || "Failed to sign in. Please check your credentials."
       );
@@ -36,7 +56,7 @@ const Login = () => {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
-            Sign in to your account
+            Log in to your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
             Or{" "}
@@ -90,7 +110,7 @@ const Login = () => {
               }`}
               disabled={isLoading}
             >
-              {isLoading ? "Signing In..." : "Sign In"}
+              {isLoading ? "Logging In..." : "Log In"}
             </button>
           </div>
 
@@ -102,16 +122,10 @@ const Login = () => {
               Forgot your password?
             </Link>
             <div className="signup-links">
-              <div className="signup-option">
-                <span>Don't have an account?</span>
-                <Link to="/signup" className="signup-btn">
+              <div className="signup-option dark:text-gray-300">
+                <span className="mr-2">Don't have an account?</span>
+                <Link to="/signup" className="signup-btn hover:text-blue-800">
                   Sign up
-                </Link>
-              </div>
-              <div className="signup-option">
-                <span>Register as Admin?</span>
-                <Link to="/admin/register" className="admin-signup-btn">
-                  Admin Sign up
                 </Link>
               </div>
             </div>

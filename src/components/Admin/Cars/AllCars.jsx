@@ -69,12 +69,11 @@ const AllCars = () => {
 
   const handleMarkAvailable = async (car) => {
     try {
-      // Direct supabase update
+      // Only update the available field
       const { data, error } = await supabase
         .from("cars")
         .update({
           available: true,
-          status: "Available",
         })
         .eq("id", car.id);
 
@@ -135,8 +134,10 @@ const AllCars = () => {
 
   if (loading) {
     return (
-      <div className="w-full dark:bg-gray-700 h-64 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 dark:border-blue-400"></div>
+      <div className="w-full dark:bg-gray-800 px-4">
+        <div className="flex items-center justify-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 dark:border-blue-400"></div>
+        </div>
       </div>
     );
   }
