@@ -180,33 +180,33 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="bg-white dark:bg-gray-800 w-full py-16">
-      <div className="w-full max-w-full mx-auto px-5 sm:px-6 lg:px-8">
-        {/* Mobile Layout */}
+    <footer className="bg-white dark:bg-gray-800 w-full py-8 xs:py-16">
+      <div className="w-full max-w-full mx-auto px-2 xs:px-5 sm:px-6 lg:px-8">
+        {/* Mobile Layout - Enhanced for extremely small screens */}
         <div className="block lg:hidden">
           {/* Logo and Vision */}
-          <div className="mb-8">
+          <div className="mb-4 xs:mb-8">
             <Link to="/">
-              <h1 className="text-[#3563E9] text-[32px] font-bold mb-4">
+              <h1 className="text-[#3563E9] text-xl xs:text-[32px] font-bold mb-2 xs:mb-4 break-words">
                 MORENT
               </h1>
             </Link>
-            <p className="text-[#13131399] dark:text-gray-400 text-base">
+            <p className="text-[#13131399] dark:text-gray-400 text-xs xs:text-base break-words">
               Our vision is to provide convenience and help increase your sales
               business.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+          <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
             {/* About Section */}
-            <div className="mb-8 ">
-              <h3 className="text-[#1A202C] dark:text-white text-xl font-semibold mb-4">
+            <div className="mb-4 xs:mb-8">
+              <h3 className="text-[#1A202C] dark:text-white text-base xs:text-xl font-semibold mb-2 xs:mb-4">
                 About
               </h3>
-              <ul className="space-y-4">
+              <ul className="space-y-2 xs:space-y-4">
                 <li>
                   <Link
                     to="#"
-                    className="text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
+                    className="text-xs xs:text-base text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
                   >
                     How it works
                   </Link>
@@ -214,7 +214,7 @@ function Footer() {
                 <li>
                   <Link
                     to="#"
-                    className="text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
+                    className="text-xs xs:text-base text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
                   >
                     Featured
                   </Link>
@@ -222,7 +222,7 @@ function Footer() {
                 <li>
                   <Link
                     to="#"
-                    className="text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
+                    className="text-xs xs:text-base text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
                   >
                     Partnership
                   </Link>
@@ -230,7 +230,7 @@ function Footer() {
                 <li>
                   <Link
                     to="#"
-                    className="text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
+                    className="text-xs xs:text-base text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
                   >
                     Bussiness Relation
                   </Link>
@@ -239,15 +239,15 @@ function Footer() {
             </div>
 
             {/* Community Section */}
-            <div className="mb-8">
-              <h3 className="text-[#1A202C] dark:text-white text-xl font-semibold mb-4">
+            <div className="mb-4 xs:mb-8">
+              <h3 className="text-[#1A202C] dark:text-white text-base xs:text-xl font-semibold mb-2 xs:mb-4">
                 Community
               </h3>
-              <ul className="space-y-4">
+              <ul className="space-y-2 xs:space-y-4">
                 <li>
                   <Link
                     to="#"
-                    className="text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
+                    className="text-xs xs:text-base text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
                   >
                     Events
                   </Link>
@@ -255,7 +255,7 @@ function Footer() {
                 <li>
                   <Link
                     to="#"
-                    className="text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
+                    className="text-xs xs:text-base text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
                   >
                     Blog
                   </Link>
@@ -263,7 +263,7 @@ function Footer() {
                 <li>
                   <Link
                     to="#"
-                    className="text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
+                    className="text-xs xs:text-base text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
                   >
                     Podcast
                   </Link>
@@ -271,7 +271,7 @@ function Footer() {
                 <li>
                   <Link
                     to="#"
-                    className="text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
+                    className="text-xs xs:text-base text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
                   >
                     Invite a friend
                   </Link>
@@ -280,15 +280,15 @@ function Footer() {
             </div>
 
             {/* Socials Section */}
-            <div className="mb-8">
-              <h3 className="text-[#1A202C] dark:text-white text-xl font-semibold mb-4">
+            <div className="mb-4 xs:mb-8">
+              <h3 className="text-[#1A202C] dark:text-white text-base xs:text-xl font-semibold mb-2 xs:mb-4">
                 Socials
               </h3>
-              <ul className="space-y-4">
+              <ul className="space-y-2 xs:space-y-4">
                 <li>
                   <Link
                     to="#"
-                    className="text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
+                    className="text-xs xs:text-base text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
                   >
                     Discord
                   </Link>
@@ -296,7 +296,7 @@ function Footer() {
                 <li>
                   <Link
                     to="#"
-                    className="text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
+                    className="text-xs xs:text-base text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
                   >
                     Instagram
                   </Link>
@@ -304,7 +304,7 @@ function Footer() {
                 <li>
                   <Link
                     to="#"
-                    className="text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
+                    className="text-xs xs:text-base text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
                   >
                     Twitter
                   </Link>
@@ -312,7 +312,7 @@ function Footer() {
                 <li>
                   <Link
                     to="#"
-                    className="text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
+                    className="text-xs xs:text-base text-[#13131399] dark:text-gray-400 hover:text-[#3563E9]"
                   >
                     Facebook
                   </Link>
@@ -322,22 +322,22 @@ function Footer() {
           </div>
 
           {/* Footer Bottom for Mobile */}
-          <div className="pt-4 mt-4">
-            <div className="flex justify-between mb-4">
+          <div className="pt-2 xs:pt-4 mt-2 xs:mt-4">
+            <div className="flex flex-col xs:flex-row justify-between mb-2 xs:mb-4 space-y-2 xs:space-y-0">
               <Link
                 to="#"
-                className="text-black text-sm font-[500] dark:text-gray-400 hover:text-[#3563E9]"
+                className="text-black text-xs xs:text-sm font-[500] dark:text-gray-400 hover:text-[#3563E9]"
               >
                 Privacy & Policy
               </Link>
               <Link
                 to="#"
-                className="text-black text-sm font-[500] dark:text-gray-400 hover:text-[#3563E9]"
+                className="text-black text-xs xs:text-sm font-[500] dark:text-gray-400 hover:text-[#3563E9]"
               >
                 Terms & Condition
               </Link>
             </div>
-            <p className="text-black text-sm font-[500] dark:text-gray-400">
+            <p className="text-black text-xs xs:text-sm font-[500] dark:text-gray-400 break-words">
               ©2022 MORENT. All rights reserved
             </p>
           </div>
