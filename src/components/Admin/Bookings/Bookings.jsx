@@ -179,7 +179,7 @@
 //                     </td>
 //                     <td className="py-3 px-6 text-left">
 //                       <span
-//                         className={`px-2 py-1 rounded-full text-xs 
+//                         className={`px-2 py-1 rounded-full text-xs
 //                                 ${
 //                                   booking.status === "Active"
 //                                     ? "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200"
@@ -311,13 +311,13 @@ import {
   FaUndo,
 } from "react-icons/fa";
 import { supabase } from "../../../utils/supabase";
-import { getBookings, updateCarStatus } from "../../../utils/supabase";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showCompleted, setShowCompleted] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [error, setError] = useState(null);
 
   const fetchAllBookings = async () => {
     try {
@@ -326,23 +326,65 @@ const Bookings = () => {
         .select(
           `
           *,
-          cars:car_id (name, model)
+          cars:car_id (name, car_type, year)
         `
         )
         .order("created_at", { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Supabase query error:", error);
+        throw error;
+      }
+
+      if (!data) {
+        console.warn("No data returned from bookings query");
+        return [];
+      }
 
       // Transform data to match your existing structure
       const formattedBookings = data.map((booking) => ({
         ...booking,
-        carName: booking.cars?.model || "Unknown",
+        carName: booking.cars?.car_type || "Unknown", // Using car_type instead of model
         name: booking.cars?.name || "Unknown",
       }));
 
       return formattedBookings;
     } catch (error) {
       console.error("Error fetching all bookings:", error);
+      setError(`Failed to fetch bookings: ${error.message || error}`);
+      return [];
+    }
+  };
+
+  const fetchUserBookings = async (userId) => {
+    try {
+      const { data, error } = await supabase
+        .from("bookings")
+        .select(
+          `
+          *,
+          cars:car_id (name, car_type, year)
+        `
+        )
+        .eq("user_id", userId)
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Supabase query error:", error);
+        throw error;
+      }
+
+      // Transform data to match your existing structure
+      const formattedBookings = data.map((booking) => ({
+        ...booking,
+        carName: booking.cars?.car_type || "Unknown", // Using car_type instead of model
+        name: booking.cars?.name || "Unknown",
+      }));
+
+      return formattedBookings;
+    } catch (error) {
+      console.error("Error fetching user bookings:", error);
+      setError(`Failed to fetch bookings: ${error.message || error}`);
       return [];
     }
   };
@@ -356,26 +398,36 @@ const Bookings = () => {
         .eq("id", userId)
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error("Admin check error:", error);
+        throw error;
+      }
 
-      return data.role === "admin";
+      return data?.role === "admin";
     } catch (error) {
       console.error("Error checking admin status:", error);
       return false;
     }
   };
 
-  const getBookings2 = async () => {
+  const loadBookings = async () => {
     try {
       setLoading(true);
+      setError(null);
 
       const {
         data: { user },
-        error,
+        error: authError,
       } = await supabase.auth.getUser();
 
-      if (error) throw error;
-      if (!user) throw new Error("No user logged in");
+      if (authError) {
+        console.error("Auth error:", authError);
+        throw authError;
+      }
+
+      if (!user) {
+        throw new Error("No user logged in");
+      }
 
       // Check if user is admin
       const adminStatus = await checkIfUserIsAdmin(user.id);
@@ -388,12 +440,13 @@ const Bookings = () => {
         bookingsData = await fetchAllBookings();
       } else {
         // Regular user sees only their bookings
-        bookingsData = await getBookings(user.id);
+        bookingsData = await fetchUserBookings(user.id);
       }
 
       setBookings(bookingsData);
     } catch (error) {
-      console.error("Error fetching bookings:", error);
+      console.error("Error in loadBookings:", error);
+      setError(`Failed to load bookings: ${error.message || error}`);
     } finally {
       setLoading(false);
     }
@@ -402,12 +455,15 @@ const Bookings = () => {
   const updateBookingStatus = async (bookingId, newStatus, carId = null) => {
     try {
       // Update booking status
-      const { error } = await supabase
+      const { error: bookingError } = await supabase
         .from("bookings")
         .update({ status: newStatus })
         .eq("id", bookingId);
 
-      if (error) throw error;
+      if (bookingError) {
+        console.error("Error updating booking:", bookingError);
+        throw bookingError;
+      }
 
       // Update car status based on booking status
       if (carId) {
@@ -437,21 +493,33 @@ const Bookings = () => {
           }
 
           // Update car status in database
-          await updateCarStatus(carId, carUpdate);
+          const { error: carError } = await supabase
+            .from("cars")
+            .update(carUpdate)
+            .eq("id", carId);
+
+          if (carError) {
+            console.error("Error updating car status:", carError);
+            throw carError;
+          }
         } catch (carError) {
           console.error("Failed to update car status:", carError);
+          setError(
+            `Failed to update car status: ${carError.message || carError}`
+          );
         }
       }
 
       // Refresh the list after updating
-      await getBookings2();
+      await loadBookings();
     } catch (error) {
       console.error("Failed to update booking status:", error);
+      setError(`Failed to update booking: ${error.message || error}`);
     }
   };
 
   useEffect(() => {
-    getBookings2();
+    loadBookings();
   }, []);
 
   // Filter bookings to exclude completed ones unless showCompleted is true
@@ -495,6 +563,13 @@ const Bookings = () => {
         </div>
       </div>
 
+      {error && (
+        <div className="bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-200 px-4 py-3 rounded relative mb-4">
+          <strong className="font-bold">Error: </strong>
+          <span className="block sm:inline">{error}</span>
+        </div>
+      )}
+
       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md dark:shadow-gray-700/50 mb-6">
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white dark:bg-gray-800">
@@ -515,17 +590,18 @@ const Bookings = () => {
               {filteredBookings.length > 0 ? (
                 filteredBookings.map((booking, index) => (
                   <tr
-                    key={index}
+                    key={booking.id || index}
                     className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700"
                   >
                     <td className="py-3 px-6 text-left">{booking.car_id}</td>
                     <td className="py-3 px-6 text-left">
                       <div>
                         <p className="font-medium dark:text-white">
-                          {booking.carName}
+                          {booking.name}
                         </p>
                         <p className="text-xs text-gray-500 dark:text-gray-400">
-                          {booking.name}
+                          {booking.carName}{" "}
+                          {booking.cars?.year && `(${booking.cars.year})`}
                         </p>
                       </div>
                     </td>
@@ -621,7 +697,7 @@ const Bookings = () => {
 
                           {/* Revert Cancelled Button */}
                           <button
-                            className={`text-purple-600 hover:text-purple-800 ${
+                            className={`text-purple-600 dark:text-purple-600 hover:text-purple-800 dark:hover:text-purple-400 ${
                               booking.status !== "Cancelled" ? "opacity-50" : ""
                             }`}
                             onClick={() =>
